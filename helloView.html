@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <h1>Hello, {{ name }}</h1>
+    <h1>My name is {{ myname }}</h1>
+  </div>
+  <div id="app2" v-cloak>
+    <span v-text="name"></span>
+  </div>
+  <div id="app3" v-cloak>
+    <span v-show="visible" v-html="name"></span>
+  </div>
+  <div id="app4" v-cloak>
+      <h1 v-if="value > 5">value가 5보다 크군요</h1>
+      <h1 v-else>value가 5보다 작군요</h1>
+      <h1 v-pre>{{ 이건 그대로 렌더링 해주길~ }}</h1>
+      <h2 v-once>초기값 : {{ value }}</h2>
+  </div>
+
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</body>
+<script type="text/javascript">
+  // 새로운 뷰를 정의합니다
+  var app = new Vue({
+    el: '#app', // 어떤 엘리먼트에 적용을 할 지 정합니다
+    // data 는 해당 뷰에서 사용할 정보를 지닙니다
+    data: {
+      name: 'Vue',
+      myname: 'Seulki'
+    }
+  });
+
+  var app2 = new Vue({
+    el: '#app2', // 어떤 엘리먼트에 적용을 할 지 정합니다
+    // data 는 해당 뷰에서 사용할 정보를 지닙니다
+    data: {
+      name: '<i>v-html 디렉티브</i>'
+    }
+  });
+
+  //v-html 사용시 주의점 : 서버측에 불필요한 부분은 필터링할 것. xss/악성태그 렌더링 방지
+  var app3 = new Vue({
+    el: '#app3',
+    data: {
+      name: '<i>v-show 디렉티브</i>',
+      visible: false //v-show 디렉티브: 콘솔에서 app3.visible = true or false 로 확인
+    }
+  });
+
+  // v-if 디렉티브
+  var app4 = new Vue({
+    el: '#app4',
+    data: {
+      value: 0
+    }
+  });
+
+  // v-pre 디렉티브 : 특정 엘리먼트를 무시함. 지시문이 없는 것으로 인식되어 컴파일 속도가 빨라짐
+
+  // v-cloak 디렉티브 : Vue 인스턴스가 제대로 준비되기 전까지 템플릿코드를 숨기고 싶을 때 사용
+  // #app 엘리먼트에 v-cloak 추가 및 css 추가 (display: none)
+
+  // v-once 디렉티브 : 초기 딱 한번만 렌더링, 정적인 부분을 보여줄 때 사용, 업데이트 성능 최적화에 사용
+</script>
+<style type=text/css>
+  [v-cloak] {
+    display: none;
+  }
+</css>
+</html>
